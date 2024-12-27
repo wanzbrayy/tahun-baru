@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tahun baru 2025 responsive</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #f4f4f4;
+      --sidebar-bg: #333;
+      --link-hover: #f39c12;
+    }
+    [data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --sidebar-bg: #f4f4f4;
+      --link-hover: #007bff;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .sidebar {
+      width: 300px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      background-color: var(--sidebar-bg);
+      color: var(--text-color);
+      transition: right 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+      z-index: 10;
+    }
+    .sidebar.active {
+      right: 0;
+    }
+    .sidebar-content {
+      padding: 20px;
+    }
+    .sidebar h2 {
+      margin-bottom: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+    .sidebar ul li a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 16px;
+    }
+    .sidebar ul li a:hover {
+      color: var(--link-hover);
+    }
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      transition: padding-right 0.3s;
+    }
+    .content.active {
+      padding-right: 300px;
+    }
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 60px;
+      font-size: 30px;
+      background-color: var(--sidebar-bg);
+      color: var(--text-color);
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .toggle-btn:hover {
+      background-color: #444;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      background-color: var(--sidebar-bg);
+      color: var(--text-color);
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .theme-toggle:hover {
+      background-color: #444;
+    }
+    .countdown {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .countdown h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .countdown p {
+      font-size: 18px;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: var(--text-color);
+      text-align: center;
+      animation: typing 2s steps(12) 1s 1 normal both, glowing 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes typing {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+    @keyframes glowing {
+      0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
+      }
+      50% {
+        text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+      }
+      100% {
+        text-shadow: 0 0 5px #0000ff, 0 0 10px #0000ff, 0 0 20px #0000ff, 0 0 40px #0000ff;
+      }
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 250px;
+      }
+      .content.active {
+        padding-right: 250px;
+      }
+    }
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 200px;
+      }
+      .content.active {
+        padding-right: 200px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+  <button class="toggle-btn" id="toggleBtn">☰</button>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <h2>menu</h2>
+      <ul>
+        <li><a href="#" id="homeLink">beranda</a></li>
+        <li><a href="#" id="aboutLink">tentang</a></li>
+        <li><a href="#" id="servicesLink">layanan</a></li>
+        <li><a href="#" id="contactLink">kontak</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="content" id="content">
+    <div id="homePage">
+      <h1>selamat datang di website</h1>
+      <p>selamat dan sukses selalu di tahun mendatang ini </p>
+      <div class="countdown" id="countdown">
+        <h1>hitungan mundur menuju tahun baru 2025</h1>
+        <p id="countdownTimer"></p>
+      </div>
+    </div>
+    <div id="aboutPage" style="display:none;">
+      <h1>tentang kami</h1>
+      <p>kami sebagai pengembang website berterimakasih atas dukungan dari kalian semua.</p>
+    </div>
+    <div id="servicesPage" style="display:none;">
+      <h1>layanan kami</h1>
+      <p>kami menawarkan berbagai layanan mulai dari pengembangan website dam script WhatsApp .</p>
+    </div>
+    <div id="contactPage" style="display:none;">
+      <h1>kontak kami</h1>
+      <p>anda bisa menghubungi kami melalui email di <a href="mailto:info@awanbrayy.com">wanzbrayy010308@gmail.com</a></p>
+    </div>
+  </div>
+  <audio id="newYearAudio" src="https://tmpfiles.org/18572162/1735329449117.mp3"></audio>
+  <canvas id="backgroundCanvas"></canvas>
+  <div class="footer" id="footer">
+    AwanBrayy
+  </div>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const content = document.getElementById('content');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      content.classList.toggle('active');
+    });
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    themeToggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        themeToggle.textContent = '☀️';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '🌙';
+      }
+    });
+    const countdownTimer = document.getElementById('countdownTimer');
+    const targetDate = new Date('2025-01-01T00:00:00');
+    const audio = document.getElementById('newYearAudio');
+    function updateCountdown() {
+      const now = new Date();
+      const timeLeft = targetDate - now;
+      if (timeLeft <= 0) {
+        countdownTimer.innerHTML = "🎉 selamat tahun baru 2025! 🎉";
+        audio.play();
+        return;
+      }
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+      const seconds = Math.floor((timeLeft / 1000) % 60);
+      countdownTimer.textContent = `${days}h ${hours}j ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    const canvas = document.getElementById('backgroundCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let lines = [];
+    let colorIndex = 0;
+    const colors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7c8c8', '#00bfae', '#8e44ad'];
+    function generateLine() {
+      const x1 = Math.random() * canvas.width;
+      const y1 = Math.random() * canvas.height;
+      const x2 = Math.random() * canvas.width;
+      const y2 = Math.random() * canvas.height;
+      const speed = Math.random() * 0.1 + 0.05;
+      lines.push({ x1, y1, x2, y2, speed });
+    }
+    function drawLines() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = colors[colorIndex];
+      ctx.lineWidth = 1;
+      lines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line.x1, line.y1);
+        ctx.lineTo(line.x2, line.y2);
+        ctx.stroke();
+        line.x1 += Math.cos(line.speed) * 2;
+        line.y1 += Math.sin(line.speed) * 2;
+        line.x2 += Math.cos(line.speed) * 2;
+        line.y2 += Math.sin(line.speed) * 2;
+        if (line.x1 > canvas.width || line.x1 < 0 || line.y1 > canvas.height || line.y1 < 0 ||
+            line.x2 > canvas.width || line.x2 < 0 || line.y2 > canvas.height || line.y2 < 0) {
+          line.x1 = Math.random() * canvas.width;
+          line.y1 = Math.random() * canvas.height;
+          line.x2 = Math.random() * canvas.width;
+          line.y2 = Math.random() * canvas.height;
+        }
+      });
+    }
+    function animate() {
+      drawLines();
+      requestAnimationFrame(animate);
+    }
+    setInterval(() => {
+      colorIndex = (colorIndex + 1) % colors.length;
+    }, 1000);
+    for (let i = 0; i < 100; i++) {
+      generateLine();
+    }
+    animate();
+    document.getElementById('homeLink').addEventListener('click', () => {
+      document.getElementById('homePage').style.display = 'block';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('servicesPage').style.display = 'none';
+      document.getElementById('contactPage').style.display = 'none';
+    });
+    document.getElementById('aboutLink').addEventListener('click', () => {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('aboutPage').style.display = 'block';
+      document.getElementById('servicesPage').style.display = 'none';
+      document.getElementById('contactPage').style.display = 'none';
+    });
+    document.getElementById('servicesLink').addEventListener('click', () => {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('servicesPage').style.display = 'block';
+      document.getElementById('contactPage').style.display = 'none';
+    });
+    document.getElementById('contactLink').addEventListener('click', () => {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('servicesPage').style.display = 'none';
+      document.getElementById('contactPage').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
+</body>
+</html>
